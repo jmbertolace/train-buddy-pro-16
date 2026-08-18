@@ -14,13 +14,13 @@ export function ExerciseDemo({
   playing = true,
   className = "",
 }: {
-  padrao?: DemoPattern;
-  gifUrl?: string;
-  imagem?: string;
-  videoUrl?: string;
+  padrao?: DemoPattern | undefined;
+  gifUrl?: string | undefined;
+  imagem?: string | undefined;
+  videoUrl?: string | undefined;
   nome: string;
-  playing?: boolean;
-  className?: string;
+  playing?: boolean | undefined;
+  className?: string | undefined;
 }) {
   if (videoUrl) {
     return (
