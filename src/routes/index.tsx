@@ -30,14 +30,20 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const menu = [
+const menu: {
+  to: string;
+  label: string;
+  icon: typeof Dumbbell;
+  emoji: string;
+  destaque?: boolean;
+}[] = [
   { to: "/treino", label: "INICIAR TREINO", icon: Dumbbell, emoji: "🏋️", destaque: true },
   { to: "/fichas", label: "MINHAS FICHAS", icon: ListChecks, emoji: "📋" },
   { to: "/progresso", label: "MEU PROGRESSO", icon: BarChart3, emoji: "📊" },
   { to: "/historico", label: "HISTÓRICO", icon: History, emoji: "🕘" },
   { to: "/biblioteca", label: "BIBLIOTECA", icon: Zap, emoji: "📚" },
   { to: "/configuracoes", label: "CONFIGURAÇÕES", icon: SettingsIcon, emoji: "⚙️" },
-] as const;
+];
 
 function Index() {
   const data = useAppData();
