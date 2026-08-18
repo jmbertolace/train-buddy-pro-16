@@ -106,13 +106,13 @@ export function mediaKey(action: "prev" | "play" | "next") {
         ? "nexttrack"
         : "play";
   try {
-    // @ts-expect-error API experimental em alguns navegadores
-    if (navigator.mediaSession?.playbackState !== undefined) {
-      const el = document.querySelector("audio,video") as HTMLMediaElement | null;
-      if (el) {
-        if (action === "play") el.paused ? void el.play() : el.pause();
-        return true;
+    const el = document.querySelector("audio,video") as HTMLMediaElement | null;
+    if (el) {
+      if (action === "play") {
+        if (el.paused) void el.play();
+        else el.pause();
       }
+      return true;
     }
   } catch {
     /* ignore */
