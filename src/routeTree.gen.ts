@@ -10,33 +10,52 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FichasRouteImport } from './routes/fichas'
+import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FichasRoute = FichasRouteImport.update({
+  id: '/fichas',
+  path: '/fichas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
+  id: '/$fichaId',
+  path: '/$fichaId',
+  getParentRoute: () => FichasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fichas': typeof FichasRouteWithChildren
+  '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fichas': typeof FichasRouteWithChildren
+  '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/fichas': typeof FichasRouteWithChildren
+  '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/fichas' | '/fichas/$fichaId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/fichas' | '/fichas/$fichaId'
+  id: '__root__' | '/' | '/fichas' | '/fichas/$fichaId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FichasRoute: typeof FichasRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +67,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fichas': {
+      id: '/fichas'
+      path: '/fichas'
+      fullPath: '/fichas'
+      preLoaderRoute: typeof FichasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fichas/$fichaId': {
+      id: '/fichas/$fichaId'
+      path: '/$fichaId'
+      fullPath: '/fichas/$fichaId'
+      preLoaderRoute: typeof FichasFichaIdRouteImport
+      parentRoute: typeof FichasRoute
+    }
   }
 }
 
+interface FichasRouteChildren {
+  FichasFichaIdRoute: typeof FichasFichaIdRoute
+}
+
+const FichasRouteChildren: FichasRouteChildren = {
+  FichasFichaIdRoute: FichasFichaIdRoute,
+}
+
+const FichasRouteWithChildren =
+  FichasRoute._addFileChildren(FichasRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FichasRoute: FichasRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
