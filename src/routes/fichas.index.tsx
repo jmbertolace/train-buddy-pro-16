@@ -4,7 +4,7 @@ import { Container, EmptyState, PageHeader } from "@/components/app-ui";
 import { createFicha, deleteFicha, duplicateFicha, useAppData } from "@/lib/store";
 import { estimarMinutos, totalSeries } from "@/lib/session";
 
-export const Route = createFileRoute("/fichas")({
+export const Route = createFileRoute("/fichas/")({
   head: () => ({
     meta: [
       { title: "Minhas fichas — JB Training Pro" },
