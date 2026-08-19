@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as FichasRouteImport } from './routes/fichas'
+import { Route as RapidoRouteImport } from './routes/rapido'
 import { Route as TreinoRouteImport } from './routes/treino'
 import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
 
@@ -19,9 +21,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BibliotecaRoute = BibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FichasRoute = FichasRouteImport.update({
   id: '/fichas',
   path: '/fichas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RapidoRoute = RapidoRouteImport.update({
+  id: '/rapido',
+  path: '/rapido',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TreinoRoute = TreinoRouteImport.update({
@@ -37,34 +49,51 @@ const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/biblioteca': typeof BibliotecaRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
+  fullPaths:
+    '/' | '/biblioteca' | '/fichas' | '/rapido' | '/treino' | '/fichas/$fichaId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
-  id: '__root__' | '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
+  to:
+    '/' | '/biblioteca' | '/fichas' | '/rapido' | '/treino' | '/fichas/$fichaId'
+  id:
+    | '__root__'
+    | '/'
+    | '/biblioteca'
+    | '/fichas'
+    | '/rapido'
+    | '/treino'
+    | '/fichas/$fichaId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BibliotecaRoute: typeof BibliotecaRoute
   FichasRoute: typeof FichasRouteWithChildren
+  RapidoRoute: typeof RapidoRoute
   TreinoRoute: typeof TreinoRoute
 }
 
@@ -77,11 +106,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/biblioteca': {
+      id: '/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/biblioteca'
+      preLoaderRoute: typeof BibliotecaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fichas': {
       id: '/fichas'
       path: '/fichas'
       fullPath: '/fichas'
       preLoaderRoute: typeof FichasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rapido': {
+      id: '/rapido'
+      path: '/rapido'
+      fullPath: '/rapido'
+      preLoaderRoute: typeof RapidoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/treino': {
@@ -114,7 +157,9 @@ const FichasRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BibliotecaRoute: BibliotecaRoute,
   FichasRoute: FichasRouteWithChildren,
+  RapidoRoute: RapidoRoute,
   TreinoRoute: TreinoRoute,
 }
 export const routeTree = rootRouteImport
