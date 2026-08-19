@@ -11,7 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as FichasRouteImport } from './routes/fichas'
+import { Route as HistoricoRouteImport } from './routes/historico'
+import { Route as ProgressoRouteImport } from './routes/progresso'
 import { Route as RapidoRouteImport } from './routes/rapido'
 import { Route as TreinoRouteImport } from './routes/treino'
 import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
@@ -26,9 +29,24 @@ const BibliotecaRoute = BibliotecaRouteImport.update({
   path: '/biblioteca',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FichasRoute = FichasRouteImport.update({
   id: '/fichas',
   path: '/fichas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoricoRoute = HistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressoRoute = ProgressoRouteImport.update({
+  id: '/progresso',
+  path: '/progresso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RapidoRoute = RapidoRouteImport.update({
@@ -50,7 +68,10 @@ const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/historico': typeof HistoricoRoute
+  '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
@@ -58,7 +79,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/historico': typeof HistoricoRoute
+  '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
@@ -67,7 +91,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/biblioteca': typeof BibliotecaRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/historico': typeof HistoricoRoute
+  '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
@@ -75,15 +102,34 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/biblioteca' | '/fichas' | '/rapido' | '/treino' | '/fichas/$fichaId'
+    | '/'
+    | '/biblioteca'
+    | '/configuracoes'
+    | '/fichas'
+    | '/historico'
+    | '/progresso'
+    | '/rapido'
+    | '/treino'
+    | '/fichas/$fichaId'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/biblioteca' | '/fichas' | '/rapido' | '/treino' | '/fichas/$fichaId'
+    | '/'
+    | '/biblioteca'
+    | '/configuracoes'
+    | '/fichas'
+    | '/historico'
+    | '/progresso'
+    | '/rapido'
+    | '/treino'
+    | '/fichas/$fichaId'
   id:
     | '__root__'
     | '/'
     | '/biblioteca'
+    | '/configuracoes'
     | '/fichas'
+    | '/historico'
+    | '/progresso'
     | '/rapido'
     | '/treino'
     | '/fichas/$fichaId'
@@ -92,7 +138,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BibliotecaRoute: typeof BibliotecaRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
   FichasRoute: typeof FichasRouteWithChildren
+  HistoricoRoute: typeof HistoricoRoute
+  ProgressoRoute: typeof ProgressoRoute
   RapidoRoute: typeof RapidoRoute
   TreinoRoute: typeof TreinoRoute
 }
@@ -113,11 +162,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BibliotecaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/fichas': {
       id: '/fichas'
       path: '/fichas'
       fullPath: '/fichas'
       preLoaderRoute: typeof FichasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historico': {
+      id: '/historico'
+      path: '/historico'
+      fullPath: '/historico'
+      preLoaderRoute: typeof HistoricoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progresso': {
+      id: '/progresso'
+      path: '/progresso'
+      fullPath: '/progresso'
+      preLoaderRoute: typeof ProgressoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rapido': {
@@ -158,7 +228,10 @@ const FichasRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibliotecaRoute: BibliotecaRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
   FichasRoute: FichasRouteWithChildren,
+  HistoricoRoute: HistoricoRoute,
+  ProgressoRoute: ProgressoRoute,
   RapidoRoute: RapidoRoute,
   TreinoRoute: TreinoRoute,
 }

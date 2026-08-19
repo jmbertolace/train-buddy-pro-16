@@ -32,9 +32,8 @@ import { openSpotify, speak, unlockAudio } from "@/lib/feedback";
 import { lastPerformance, sessionVolume, useAppData } from "@/lib/store";
 
 export const Route = createFileRoute("/treino")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    ficha: typeof search["ficha"] === "string" ? (search["ficha"] as string) : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { ficha?: string } =>
+    typeof search["ficha"] === "string" ? { ficha: search["ficha"] } : {},
   head: () => ({
     meta: [
       { title: "Modo treino — JB Training Pro" },
