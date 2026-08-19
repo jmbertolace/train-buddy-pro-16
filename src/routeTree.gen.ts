@@ -60,9 +60,9 @@ const FichasIndexRoute = FichasIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
-  id: '/fichas/$fichaId',
-  path: '/fichas/$fichaId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$fichaId',
+  path: '/$fichaId',
+  getParentRoute: () => FichasRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -143,7 +143,6 @@ export interface RootRouteChildren {
   ProgressoRoute: typeof ProgressoRoute
   RapidoRoute: typeof RapidoRoute
   TreinoRoute: typeof TreinoRoute
-  FichasFichaIdRoute: typeof FichasFichaIdRoute
   FichasIndexRoute: typeof FichasIndexRoute
 }
 
@@ -207,10 +206,10 @@ declare module '@tanstack/react-router' {
     }
     '/fichas/$fichaId': {
       id: '/fichas/$fichaId'
-      path: '/fichas/$fichaId'
+      path: '/$fichaId'
       fullPath: '/fichas/$fichaId'
       preLoaderRoute: typeof FichasFichaIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof FichasRoute
     }
   }
 }
@@ -223,7 +222,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProgressoRoute: ProgressoRoute,
   RapidoRoute: RapidoRoute,
   TreinoRoute: TreinoRoute,
-  FichasFichaIdRoute: FichasFichaIdRoute,
   FichasIndexRoute: FichasIndexRoute,
 }
 export const routeTree = rootRouteImport
