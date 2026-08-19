@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FichasRouteImport } from './routes/fichas'
+import { Route as TreinoRouteImport } from './routes/treino'
 import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const FichasRoute = FichasRouteImport.update({
   path: '/fichas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TreinoRoute = TreinoRouteImport.update({
+  id: '/treino',
+  path: '/treino',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
   id: '/$fichaId',
   path: '/$fichaId',
@@ -32,30 +38,34 @@ const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/fichas': typeof FichasRouteWithChildren
+  '/treino': typeof TreinoRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/fichas' | '/fichas/$fichaId'
+  fullPaths: '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/fichas' | '/fichas/$fichaId'
-  id: '__root__' | '/' | '/fichas' | '/fichas/$fichaId'
+  to: '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
+  id: '__root__' | '/' | '/fichas' | '/treino' | '/fichas/$fichaId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FichasRoute: typeof FichasRouteWithChildren
+  TreinoRoute: typeof TreinoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -72,6 +82,13 @@ declare module '@tanstack/react-router' {
       path: '/fichas'
       fullPath: '/fichas'
       preLoaderRoute: typeof FichasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/treino': {
+      id: '/treino'
+      path: '/treino'
+      fullPath: '/treino'
+      preLoaderRoute: typeof TreinoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/fichas/$fichaId': {
@@ -98,6 +115,7 @@ const FichasRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FichasRoute: FichasRouteWithChildren,
+  TreinoRoute: TreinoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
