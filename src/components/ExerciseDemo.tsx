@@ -114,7 +114,7 @@ function StickFigure({
         {p.bar && (
           <g
             stroke="currentColor"
-            className="text-accent-foreground"
+            className="text-accent"
             strokeWidth="6"
             strokeLinecap="round"
           >
