@@ -132,7 +132,30 @@ export interface AppData {
   sessaoAtiva: WorkoutSession | null;
   settings: Settings;
   ultimaFichaId: string | null;
+  playlists: SpotifyPlaylist[];
+  sync: SyncState;
 }
+
+export interface SpotifyPlaylist {
+  id: string;
+  nome: string;
+  url: string;
+}
+
+export interface SyncState {
+  /** o usuário autorizou o envio de dados ao personal */
+  autorizado: boolean;
+  enviarAutomatico: boolean;
+  ultimoEnvioEm: number | null;
+  pendente: boolean;
+}
+
+export const defaultSync: SyncState = {
+  autorizado: false,
+  enviarAutomatico: false,
+  ultimoEnvioEm: null,
+  pendente: false,
+};
 
 export const defaultSettings: Settings = {
   vozAtiva: true,

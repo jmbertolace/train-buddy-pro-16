@@ -5,9 +5,11 @@ import type {
   FichaExercise,
   LibraryExercise,
   Settings,
+  SpotifyPlaylist,
+  SyncState,
   WorkoutSession,
 } from "./types";
-import { defaultSettings } from "./types";
+import { defaultSettings, defaultSync } from "./types";
 
 const KEY = "jb-training-pro:v1";
 
@@ -18,6 +20,8 @@ const empty: AppData = {
   sessaoAtiva: null,
   settings: defaultSettings,
   ultimaFichaId: null,
+  playlists: [],
+  sync: defaultSync,
 };
 
 let state: AppData = empty;
@@ -34,6 +38,8 @@ function read(): AppData {
       ...empty,
       ...parsed,
       settings: { ...defaultSettings, ...(parsed.settings ?? {}) },
+      sync: { ...defaultSync, ...(parsed.sync ?? {}) },
+      playlists: parsed.playlists ?? [],
     };
   } catch {
     return empty;
@@ -153,6 +159,28 @@ export function updateSettings(patch: Partial<Settings>) {
   setState((p) => ({ ...p, settings: { ...p.settings, ...patch } }));
 }
 
+/* ---------------- playlists (Spotify) ---------------- */
+
+export function addPlaylist(nome: string, url: string): SpotifyPlaylist {
+  const pl: SpotifyPlaylist = { id: uid(), nome, url };
+  setState((p) => ({ ...p, playlists: [...p.playlists, pl] }));
+  return pl;
+}
+
+export function removePlaylist(id: string) {
+  setState((p) => ({ ...p, playlists: p.playlists.filter((x) => x.id !== id) }));
+}
+
+/* ---------------- sincronização com o personal ---------------- */
+
+export function updateSync(patch: Partial<SyncState>) {
+  setState((p) => ({ ...p, sync: { ...p.sync, ...patch } }));
+}
+
+export function replaceFichas(fichas: Ficha[]) {
+  setState((p) => ({ ...p, fichas }));
+}
+
 /* ---------------- sessão ---------------- */
 
 export function setSession(
@@ -173,6 +201,7 @@ export function finishSession(session: WorkoutSession) {
     ...p,
     sessaoAtiva: null,
     historico: [{ ...session, concluido: true }, ...p.historico],
+    sync: { ...p.sync, pendente: p.sync.autorizado },
   }));
 }
 

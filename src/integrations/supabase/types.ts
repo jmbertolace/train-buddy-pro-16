@@ -14,16 +14,124 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      dados_aluno: {
+        Row: {
+          enviado_em: string
+          fichas: Json
+          fichas_atualizadas_em: string | null
+          fichas_atualizadas_por: string | null
+          historico: Json
+          user_id: string
+        }
+        Insert: {
+          enviado_em?: string
+          fichas?: Json
+          fichas_atualizadas_em?: string | null
+          fichas_atualizadas_por?: string | null
+          historico?: Json
+          user_id: string
+        }
+        Update: {
+          enviado_em?: string
+          fichas?: Json
+          fichas_atualizadas_em?: string | null
+          fichas_atualizadas_por?: string | null
+          historico?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          criado_em: string
+          email: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          criado_em?: string
+          email?: string
+          id: string
+          nome?: string
+        }
+        Update: {
+          criado_em?: string
+          email?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      vinculos: {
+        Row: {
+          aluno_email: string
+          aluno_id: string | null
+          apelido: string
+          atualizado_em: string
+          criado_em: string
+          id: string
+          personal_id: string
+          status: string
+        }
+        Insert: {
+          aluno_email: string
+          aluno_id?: string | null
+          apelido?: string
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          personal_id: string
+          status?: string
+        }
+        Update: {
+          aluno_email?: string
+          aluno_id?: string | null
+          apelido?: string
+          atualizado_em?: string
+          criado_em?: string
+          id?: string
+          personal_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      autorizado: {
+        Args: { _aluno_id: string; _personal_id: string }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "personal" | "aluno"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +258,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["personal", "aluno"],
+    },
   },
 } as const

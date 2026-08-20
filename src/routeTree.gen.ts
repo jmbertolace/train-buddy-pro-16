@@ -10,18 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as HistoricoRouteImport } from './routes/historico'
 import { Route as ProgressoRouteImport } from './routes/progresso'
 import { Route as RapidoRouteImport } from './routes/rapido'
 import { Route as TreinoRouteImport } from './routes/treino'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
 import { Route as FichasIndexRouteImport } from './routes/fichas.index'
 import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
+import { Route as AuthenticatedPersonalIndexRouteImport } from './routes/_authenticated/personal.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BibliotecaRoute = BibliotecaRouteImport.update({
@@ -54,6 +67,11 @@ const TreinoRoute = TreinoRouteImport.update({
   path: '/treino',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const FichasIndexRoute = FichasIndexRouteImport.update({
   id: '/fichas/',
   path: '/fichas/',
@@ -64,79 +82,107 @@ const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
   path: '/fichas/$fichaId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedPersonalIndexRoute =
+  AuthenticatedPersonalIndexRouteImport.update({
+    id: '/personal/',
+    path: '/personal/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/biblioteca': typeof BibliotecaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/historico': typeof HistoricoRoute
   '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas/': typeof FichasIndexRoute
+  '/personal/': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/biblioteca': typeof BibliotecaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/historico': typeof HistoricoRoute
   '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
+  '/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas': typeof FichasIndexRoute
+  '/personal': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/biblioteca': typeof BibliotecaRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/historico': typeof HistoricoRoute
   '/progresso': typeof ProgressoRoute
   '/rapido': typeof RapidoRoute
   '/treino': typeof TreinoRoute
+  '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas/': typeof FichasIndexRoute
+  '/_authenticated/personal/': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/biblioteca'
     | '/configuracoes'
     | '/historico'
     | '/progresso'
     | '/rapido'
     | '/treino'
+    | '/conta'
     | '/fichas/$fichaId'
     | '/fichas/'
+    | '/personal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/biblioteca'
     | '/configuracoes'
     | '/historico'
     | '/progresso'
     | '/rapido'
     | '/treino'
+    | '/conta'
     | '/fichas/$fichaId'
     | '/fichas'
+    | '/personal'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/biblioteca'
     | '/configuracoes'
     | '/historico'
     | '/progresso'
     | '/rapido'
     | '/treino'
+    | '/_authenticated/conta'
     | '/fichas/$fichaId'
     | '/fichas/'
+    | '/_authenticated/personal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BibliotecaRoute: typeof BibliotecaRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   HistoricoRoute: typeof HistoricoRoute
@@ -154,6 +200,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biblioteca': {
@@ -198,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TreinoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/fichas/': {
       id: '/fichas/'
       path: '/fichas'
@@ -212,11 +279,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FichasFichaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/personal/': {
+      id: '/_authenticated/personal/'
+      path: '/personal'
+      fullPath: '/personal/'
+      preLoaderRoute: typeof AuthenticatedPersonalIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedContaRoute: typeof AuthenticatedContaRoute
+  AuthenticatedPersonalIndexRoute: typeof AuthenticatedPersonalIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedContaRoute: AuthenticatedContaRoute,
+  AuthenticatedPersonalIndexRoute: AuthenticatedPersonalIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   BibliotecaRoute: BibliotecaRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   HistoricoRoute: HistoricoRoute,
