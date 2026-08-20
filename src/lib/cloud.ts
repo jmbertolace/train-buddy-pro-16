@@ -106,12 +106,14 @@ export async function meusVinculos(): Promise<Vinculo[]> {
 
 export async function responderVinculo(id: string, status: VinculoStatus) {
   const { data } = await supabase.auth.getUser();
-  const patch: Record<string, unknown> = {
-    status,
-    atualizado_em: new Date().toISOString(),
-  };
-  if (status === "ativo") patch["aluno_id"] = data.user?.id ?? null;
-  const { error } = await supabase.from("vinculos").update(patch).eq("id", id);
+  const { error } = await supabase
+    .from("vinculos")
+    .update({
+      status,
+      atualizado_em: new Date().toISOString(),
+      ...(status === "ativo" ? { aluno_id: data.user?.id ?? null } : {}),
+    })
+    .eq("id", id);
   if (error) throw error;
 }
 
