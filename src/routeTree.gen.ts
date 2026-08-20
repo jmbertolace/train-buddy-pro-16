@@ -21,6 +21,7 @@ import { Route as TreinoRouteImport } from './routes/treino'
 import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
 import { Route as FichasIndexRouteImport } from './routes/fichas.index'
 import { Route as FichasFichaIdRouteImport } from './routes/fichas.$fichaId'
+import { Route as AuthenticatedPersonalIndexRouteImport } from './routes/_authenticated/personal.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -81,6 +82,12 @@ const FichasFichaIdRoute = FichasFichaIdRouteImport.update({
   path: '/fichas/$fichaId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedPersonalIndexRoute =
+  AuthenticatedPersonalIndexRouteImport.update({
+    id: '/personal/',
+    path: '/personal/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas/': typeof FichasIndexRoute
+  '/personal/': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
   '/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas': typeof FichasIndexRoute
+  '/personal': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +131,7 @@ export interface FileRoutesById {
   '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/fichas/$fichaId': typeof FichasFichaIdRoute
   '/fichas/': typeof FichasIndexRoute
+  '/_authenticated/personal/': typeof AuthenticatedPersonalIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/fichas/$fichaId'
     | '/fichas/'
+    | '/personal/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/fichas/$fichaId'
     | '/fichas'
+    | '/personal'
   id:
     | '__root__'
     | '/'
@@ -164,6 +176,7 @@ export interface FileRouteTypes {
     | '/_authenticated/conta'
     | '/fichas/$fichaId'
     | '/fichas/'
+    | '/_authenticated/personal/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -266,15 +279,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FichasFichaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/personal/': {
+      id: '/_authenticated/personal/'
+      path: '/personal'
+      fullPath: '/personal/'
+      preLoaderRoute: typeof AuthenticatedPersonalIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedContaRoute: typeof AuthenticatedContaRoute
+  AuthenticatedPersonalIndexRoute: typeof AuthenticatedPersonalIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedContaRoute: AuthenticatedContaRoute,
+  AuthenticatedPersonalIndexRoute: AuthenticatedPersonalIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
