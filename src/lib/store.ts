@@ -201,6 +201,7 @@ export function finishSession(session: WorkoutSession) {
     ...p,
     sessaoAtiva: null,
     historico: [{ ...session, concluido: true }, ...p.historico],
+    sync: { ...p.sync, pendente: p.sync.autorizado },
   }));
 }
 
