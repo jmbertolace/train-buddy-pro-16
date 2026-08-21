@@ -28,9 +28,85 @@ export function unlockAudio() {
   }
 }
 
+/* ---------- Ducking: abaixa a música durante os alertas ---------- */
+
+let duckEl: HTMLAudioElement | null = null;
+let duckTimer: number | null = null;
+let duckUrl: string | null = null;
+
+function silentTrackUrl(): string {
+  if (duckUrl) return duckUrl;
+  const sampleRate = 8000;
+  const seconds = 30;
+  const frames = sampleRate * seconds;
+  const buffer = new ArrayBuffer(44 + frames * 2);
+  const view = new DataView(buffer);
+  const ascii = (offset: number, text: string) => {
+    for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i));
+  };
+  ascii(0, "RIFF");
+  view.setUint32(4, 36 + frames * 2, true);
+  ascii(8, "WAVEfmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  ascii(36, "data");
+  view.setUint32(40, frames * 2, true);
+  duckUrl = URL.createObjectURL(new Blob([buffer], { type: "audio/wav" }));
+  return duckUrl;
+}
+
+/**
+ * Toma o foco de áudio do sistema para que Spotify / player de MP3 abaixem
+ * (ou pausem) a música enquanto o app fala o alerta.
+ */
+export function duckMusic(ms = 4000) {
+  if (typeof window === "undefined") return;
+  if (!getState().settings.abaixarMusicaAlerta) return;
+  try {
+    if (!duckEl) {
+      duckEl = new Audio(silentTrackUrl());
+      duckEl.loop = true;
+      duckEl.volume = 0.02;
+    }
+    void duckEl.play().catch(() => undefined);
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: "JB Training Pro — alerta",
+        artist: "Treino",
+      });
+      navigator.mediaSession.playbackState = "playing";
+    }
+  } catch {
+    /* ignore */
+  }
+  if (duckTimer) window.clearTimeout(duckTimer);
+  duckTimer = window.setTimeout(unduckMusic, ms);
+}
+
+export function unduckMusic() {
+  if (duckTimer) {
+    window.clearTimeout(duckTimer);
+    duckTimer = null;
+  }
+  try {
+    duckEl?.pause();
+    if (typeof navigator !== "undefined" && "mediaSession" in navigator) {
+      navigator.mediaSession.playbackState = "none";
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 export function beep(freq = 880, duration = 0.18, times = 1) {
   const c = ctx();
   if (!c) return;
+  duckMusic(Math.ceil((duration + 0.1) * times * 1000) + 800);
   for (let i = 0; i < times; i++) {
     const osc = c.createOscillator();
     const gain = c.createGain();
@@ -45,6 +121,7 @@ export function beep(freq = 880, duration = 0.18, times = 1) {
     osc.stop(start + duration + 0.02);
   }
 }
+
 
 export function vibrate(pattern: number | number[]) {
   const s = getState().settings;
@@ -62,9 +139,12 @@ export function speak(texto: string, force = false) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   const s = getState().settings;
   if (!s.vozAtiva && !force) return;
+  duckMusic(Math.min(12000, 1500 + texto.length * 90));
   try {
     const u = new SpeechSynthesisUtterance(texto);
+    u.onend = () => unduckMusic();
     u.lang = "pt-BR";
+
     u.rate = 1.05;
     u.volume = s.vozVolume;
     const voz = window.speechSynthesis
