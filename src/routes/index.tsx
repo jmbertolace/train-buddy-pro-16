@@ -88,7 +88,11 @@ function Index() {
             titulo="Duração do último treino"
             valor={ultimoTreino ? formatDuration(ultimoTreino.duracaoMs) : "—"}
           />
-          <Info titulo="Personal Trainer" valor="Não conectado" />
+          <Info
+            titulo="Personal Trainer"
+            valor={data.sync.autorizado ? "Conectado e autorizado" : "Não conectado"}
+          />
+
         </section>
 
         <nav className="grid gap-3">
