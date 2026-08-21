@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, PageHeader } from "@/components/app-ui";
+import { SpotifyPanel } from "@/components/SpotifyPanel";
+
 import { Switch } from "@/components/ui/switch";
 import { beep, speak, vibrate } from "@/lib/feedback";
 import { updateSettings, useSettings } from "@/lib/store";
