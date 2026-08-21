@@ -96,6 +96,21 @@ export function openSpotify() {
   window.open(web, "_blank", "noopener");
 }
 
+/** Abre uma playlist/álbum a partir de um link do Spotify, preferindo o app nativo. */
+export function abrirPlaylist(url: string) {
+  if (typeof window === "undefined") return;
+  const match = /open\.spotify\.com\/([a-z]+)\/([A-Za-z0-9]+)/.exec(url);
+  const uri = match ? `spotify:${match[1]}:${match[2]}` : null;
+  if (uri) {
+    const t = window.setTimeout(() => window.open(url, "_blank", "noopener"), 900);
+    window.location.href = uri;
+    window.setTimeout(() => window.clearTimeout(t), 2500);
+    return;
+  }
+  window.open(url, "_blank", "noopener");
+}
+
+
 /** Controles de mídia do sistema (funcionam quando o dispositivo os expõe). */
 export function mediaKey(action: "prev" | "play" | "next") {
   if (typeof navigator === "undefined") return false;
