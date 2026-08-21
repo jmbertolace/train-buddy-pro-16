@@ -139,9 +139,12 @@ export function speak(texto: string, force = false) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   const s = getState().settings;
   if (!s.vozAtiva && !force) return;
+  duckMusic(Math.min(12000, 1500 + texto.length * 90));
   try {
     const u = new SpeechSynthesisUtterance(texto);
+    u.onend = () => unduckMusic();
     u.lang = "pt-BR";
+
     u.rate = 1.05;
     u.volume = s.vozVolume;
     const voz = window.speechSynthesis
