@@ -171,6 +171,11 @@ function ConfigPage() {
           </p>
         </Secao>
 
+        <div className="mt-4">
+          <SpotifyPanel />
+        </div>
+
+
         <p className="mt-6 text-xs text-muted-foreground">
           Todos os dados ficam salvos apenas neste aparelho e continuam disponíveis sem
           internet.
