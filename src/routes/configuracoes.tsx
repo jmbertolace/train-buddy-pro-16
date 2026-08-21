@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, PageHeader } from "@/components/app-ui";
+import { SpotifyPanel } from "@/components/SpotifyPanel";
+
 import { Switch } from "@/components/ui/switch";
 import { beep, speak, vibrate } from "@/lib/feedback";
 import { updateSettings, useSettings } from "@/lib/store";
@@ -170,6 +172,11 @@ function ConfigPage() {
             armazenada ou reproduzida pelo JB Training Pro.
           </p>
         </Secao>
+
+        <div className="mt-4">
+          <SpotifyPanel />
+        </div>
+
 
         <p className="mt-6 text-xs text-muted-foreground">
           Todos os dados ficam salvos apenas neste aparelho e continuam disponíveis sem

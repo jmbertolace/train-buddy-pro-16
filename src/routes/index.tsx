@@ -88,7 +88,11 @@ function Index() {
             titulo="Duração do último treino"
             valor={ultimoTreino ? formatDuration(ultimoTreino.duracaoMs) : "—"}
           />
-          <Info titulo="Personal Trainer" valor="Não conectado" />
+          <Info
+            titulo="Personal Trainer"
+            valor={data.sync.autorizado ? "Conectado e autorizado" : "Não conectado"}
+          />
+
         </section>
 
         <nav className="grid gap-3">
@@ -115,13 +119,16 @@ function Index() {
             <span className="flex-1 text-lg tracking-wide">TREINO RÁPIDO</span>
             <span aria-hidden>⚡</span>
           </Link>
-          <div className="flex items-center gap-4 rounded-2xl border border-dashed border-border px-5 py-5 text-muted-foreground">
+          <Link
+            to="/conta"
+            className="flex items-center gap-4 rounded-2xl border border-border bg-card px-5 py-5 font-bold"
+          >
             <UserRoundCog className="size-6 shrink-0" />
-            <span className="flex-1 text-sm">
-              👨‍🏫 MEU PERSONAL TRAINER — em breve (requer conta online)
-            </span>
-          </div>
+            <span className="flex-1 text-lg tracking-wide">MEU PERSONAL TRAINER</span>
+            <span aria-hidden>👨‍🏫</span>
+          </Link>
           <SpotifyButton />
+
         </nav>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">

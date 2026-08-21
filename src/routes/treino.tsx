@@ -11,6 +11,8 @@ import {
   formatTime,
 } from "@/components/app-ui";
 import { ExerciseInfoModal } from "@/components/ExerciseInfoModal";
+import { SpotifyPanel } from "@/components/SpotifyPanel";
+
 import {
   ajustarDescanso,
   alternarPausaDescanso,
@@ -272,8 +274,13 @@ function SessaoAtiva({ onFinalizar }: { onFinalizar: (id: string) => void }) {
         </button>
         <div className="flex w-full max-w-md gap-2">
           <ExerciseInfoModal exercicio={ex} label="ℹ️ INFORMAÇÕES" />
-          {data.settings.spotifyNoTreino && <SpotifyButton compact />}
         </div>
+        {data.settings.spotifyNoTreino && (
+          <div className="w-full max-w-md">
+            <SpotifyPanel compact />
+          </div>
+        )}
+
       </main>
     );
   }
