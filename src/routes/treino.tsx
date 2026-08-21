@@ -11,6 +11,8 @@ import {
   formatTime,
 } from "@/components/app-ui";
 import { ExerciseInfoModal } from "@/components/ExerciseInfoModal";
+import { SpotifyPanel } from "@/components/SpotifyPanel";
+
 import {
   ajustarDescanso,
   alternarPausaDescanso,
