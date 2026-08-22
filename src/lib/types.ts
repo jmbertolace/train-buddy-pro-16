@@ -160,6 +160,12 @@ export interface SyncState {
   enviarAutomatico: boolean;
   ultimoEnvioEm: number | null;
   pendente: boolean;
+  /** ISO da última atualização de ficha feita pelo personal já vista */
+  fichaVistaEm: string | null;
+  /** ISO da última mudança de vínculo já vista */
+  vinculoVistoEm: string | null;
+  /** por aluno (lado personal): ISO do último envio já visto */
+  envioAlunoVisto: Record<string, string>;
 }
 
 export const defaultSync: SyncState = {
@@ -167,6 +173,9 @@ export const defaultSync: SyncState = {
   enviarAutomatico: false,
   ultimoEnvioEm: null,
   pendente: false,
+  fichaVistaEm: null,
+  vinculoVistoEm: null,
+  envioAlunoVisto: {},
 };
 
 export const defaultSettings: Settings = {
