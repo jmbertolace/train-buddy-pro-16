@@ -385,6 +385,12 @@ function SessaoAtiva({ onFinalizar }: { onFinalizar: (id: string) => void }) {
           >
             ✓ CONCLUÍDA
           </button>
+          {comandoVoz && (
+            <p className="-mt-1 text-center text-xs text-muted-foreground">
+              🎙️ Comando de voz ativo — diga “concluído”, “pular” ou “pausar”.
+            </p>
+          )}
+
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
