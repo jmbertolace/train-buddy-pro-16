@@ -22,6 +22,7 @@ const empty: AppData = {
   ultimaFichaId: null,
   playlists: [],
   sync: defaultSync,
+  notificacoes: [],
 };
 
 let state: AppData = empty;
