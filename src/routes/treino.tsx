@@ -31,7 +31,9 @@ import {
   totalSeries,
 } from "@/lib/session";
 import { openSpotify, speak, unlockAudio } from "@/lib/feedback";
+import { startVoiceCommands, voiceCommandsSupported } from "@/lib/voice-commands";
 import { lastPerformance, sessionVolume, useAppData } from "@/lib/store";
+
 
 export const Route = createFileRoute("/treino")({
   validateSearch: (search: Record<string, unknown>): { ficha?: string } =>
