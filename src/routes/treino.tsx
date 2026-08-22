@@ -170,14 +170,27 @@ function SessaoAtiva({ onFinalizar }: { onFinalizar: (id: string) => void }) {
   const s = data.sessaoAtiva!;
   const [, force] = useState(0);
   const avisos = useRef<Set<number>>(new Set());
+  const comandoVoz = data.settings.comandoVozAtivo;
 
   useEffect(() => {
     const i = window.setInterval(() => force((n) => n + 1), 250);
     return () => window.clearInterval(i);
   }, []);
 
+  useEffect(() => {
+    if (!comandoVoz || !voiceCommandsSupported()) return;
+    const stop = startVoiceCommands((cmd) => {
+      if (cmd === "concluir") concluirSerie();
+      else if (cmd === "pular") pularSerie();
+      else if (cmd === "pausar") pausarTreino();
+      else if (cmd === "retomar") retomarTreino();
+    });
+    return stop;
+  }, [comandoVoz]);
+
   const descanso = s.descanso;
   const restante = descanso ? restanteMs(descanso) : 0;
+
 
   useEffect(() => {
     if (!descanso || descanso.pausado) return;
