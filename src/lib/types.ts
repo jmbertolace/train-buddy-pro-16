@@ -127,6 +127,15 @@ export interface Settings {
   comandoVozAtivo: boolean;
 }
 
+export interface Notificacao {
+  id: string;
+  tipo: "ficha" | "vinculo" | "dados";
+  titulo: string;
+  mensagem: string;
+  em: number;
+  lida: boolean;
+}
+
 export interface AppData {
   fichas: Ficha[];
   personalizados: LibraryExercise[];
