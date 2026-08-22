@@ -77,7 +77,7 @@ export function ExerciseInfoModal({
 
         <section className="space-y-2">
           <h3 className="text-xs font-bold tracking-widest text-muted-foreground">
-            🎞️ DEMONSTRAÇÃO DO EXERCÍCIO
+            🎥 VÍDEO EXPLICATIVO DO EXERCÍCIO
           </h3>
           <div className={full ? "fixed inset-0 z-50 bg-background p-4" : ""}>
             {full && (
@@ -118,8 +118,8 @@ export function ExerciseInfoModal({
             </button>
           </div>
           <p className="text-xs text-muted-foreground">
-            A animação repete automaticamente e representa o padrão de movimento do
-            exercício selecionado.
+            Quando há vídeo cadastrado ele é exibido aqui. Sem vídeo, o app mostra a
+            animação offline do padrão de movimento do exercício.
           </p>
         </section>
 

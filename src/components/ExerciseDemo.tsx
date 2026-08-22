@@ -3,7 +3,7 @@ import type { DemoPattern } from "@/lib/types";
 
 /**
  * Animação demonstrativa offline (SVG) coerente com o padrão de movimento
- * do exercício. Se houver GIF/imagem/vídeo cadastrado, ele tem prioridade.
+ * do exercício. O vídeo curto explicativo cadastrado tem prioridade sobre a animação.
  */
 export function ExerciseDemo({
   padrao = "supino",
@@ -26,8 +26,10 @@ export function ExerciseDemo({
     return (
       <video
         src={videoUrl}
-        className={`w-full rounded-xl bg-card ${className}`}
+        poster={imagem ?? undefined}
+        className={`w-full rounded-xl bg-card object-contain ${className}`}
         controls
+        autoPlay={playing}
         loop
         muted
         playsInline
