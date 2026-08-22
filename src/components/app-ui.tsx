@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronLeft, Music } from "lucide-react";
-import { openSpotify } from "@/lib/feedback";
+import { ChevronLeft, ListMusic, Music } from "lucide-react";
+import { toast } from "sonner";
+import { abrirPlayerMusica, openSpotify } from "@/lib/feedback";
 import { useSettings } from "@/lib/store";
+
 
 export function PageHeader({
   titulo,
