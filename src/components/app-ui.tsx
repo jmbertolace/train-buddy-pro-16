@@ -35,21 +35,36 @@ export function Container({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Linha de música: metade Spotify, metade player de MP3 do aparelho. */
 export function SpotifyButton({ compact = false }: { compact?: boolean }) {
   const s = useSettings();
   if (!s.spotifyAtivo) return null;
+  const base = `inline-flex items-center justify-center gap-2 rounded-xl font-bold transition active:scale-[0.98] ${
+    compact ? "px-3 py-2 text-sm" : "px-4 py-4 text-base"
+  }`;
   return (
-    <button
-      type="button"
-      onClick={openSpotify}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl bg-accent font-bold text-accent-foreground transition active:scale-[0.98] ${
-        compact ? "px-3 py-2 text-sm" : "w-full px-4 py-4 text-base"
-      }`}
-    >
-      <Music className="size-5" /> {compact ? "SPOTIFY" : "🎵 SPOTIFY"}
-    </button>
+    <div className="grid w-full grid-cols-2 gap-2">
+      <button
+        type="button"
+        onClick={openSpotify}
+        className={`${base} bg-accent text-accent-foreground`}
+      >
+        <Music className="size-5" /> SPOTIFY
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          if (!abrirPlayerMusica())
+            toast.info("Abra o player de MP3 do aparelho pela tela inicial dele.");
+        }}
+        className={`${base} border border-border bg-secondary text-secondary-foreground`}
+      >
+        <ListMusic className="size-5" /> MP3
+      </button>
+    </div>
   );
 }
+
 
 export function EmptyState({
   titulo,
