@@ -195,19 +195,19 @@ function NovoExercicio({
           />
           <input
             className={inputCls}
-            placeholder="URL da imagem ou GIF (opcional)"
-            value={gifUrl}
-            onChange={(e) => setGifUrl(e.target.value)}
-          />
-          <input
-            className={inputCls}
-            placeholder="URL de vídeo curto (opcional)"
+            placeholder="URL do vídeo curto explicativo (mp4, opcional)"
             value={videoUrl}
             onChange={(e) => setVideoUrl(e.target.value)}
           />
+          <input
+            className={inputCls}
+            placeholder="URL da imagem de capa (opcional)"
+            value={gifUrl}
+            onChange={(e) => setGifUrl(e.target.value)}
+          />
           <label className="space-y-1">
             <span className="text-xs tracking-wide text-muted-foreground uppercase">
-              Animação padrão (usada se não houver GIF)
+              Animação padrão (usada se não houver vídeo)
             </span>
             <select
               className={inputCls}

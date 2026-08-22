@@ -31,7 +31,9 @@ import {
   totalSeries,
 } from "@/lib/session";
 import { openSpotify, speak, unlockAudio } from "@/lib/feedback";
+import { startVoiceCommands, voiceCommandsSupported } from "@/lib/voice-commands";
 import { lastPerformance, sessionVolume, useAppData } from "@/lib/store";
+
 
 export const Route = createFileRoute("/treino")({
   validateSearch: (search: Record<string, unknown>): { ficha?: string } =>
@@ -170,14 +172,27 @@ function SessaoAtiva({ onFinalizar }: { onFinalizar: (id: string) => void }) {
   const s = data.sessaoAtiva!;
   const [, force] = useState(0);
   const avisos = useRef<Set<number>>(new Set());
+  const comandoVoz = data.settings.comandoVozAtivo;
 
   useEffect(() => {
     const i = window.setInterval(() => force((n) => n + 1), 250);
     return () => window.clearInterval(i);
   }, []);
 
+  useEffect(() => {
+    if (!comandoVoz || !voiceCommandsSupported()) return;
+    const stop = startVoiceCommands((cmd) => {
+      if (cmd === "concluir") concluirSerie();
+      else if (cmd === "pular") pularSerie();
+      else if (cmd === "pausar") pausarTreino();
+      else if (cmd === "retomar") retomarTreino();
+    });
+    return stop;
+  }, [comandoVoz]);
+
   const descanso = s.descanso;
   const restante = descanso ? restanteMs(descanso) : 0;
+
 
   useEffect(() => {
     if (!descanso || descanso.pausado) return;
@@ -370,6 +385,12 @@ function SessaoAtiva({ onFinalizar }: { onFinalizar: (id: string) => void }) {
           >
             ✓ CONCLUÍDA
           </button>
+          {comandoVoz && (
+            <p className="-mt-1 text-center text-xs text-muted-foreground">
+              🎙️ Comando de voz ativo — diga “concluído”, “pular” ou “pausar”.
+            </p>
+          )}
+
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"

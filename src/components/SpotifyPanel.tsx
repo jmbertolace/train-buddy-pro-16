@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Music, Play, SkipBack, SkipForward, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { abrirPlaylist, mediaKey, openSpotify } from "@/lib/feedback";
+import { abrirPlayerMusica, abrirPlaylist, mediaKey, openSpotify } from "@/lib/feedback";
 import { addPlaylist, removePlaylist, useAppData } from "@/lib/store";
 
 export function SpotifyPanel({ compact = false }: { compact?: boolean }) {
@@ -21,7 +21,17 @@ export function SpotifyPanel({ compact = false }: { compact?: boolean }) {
           onClick={openSpotify}
           className="rounded-xl bg-accent px-3 py-2 text-sm font-bold text-accent-foreground"
         >
-          ABRIR
+          SPOTIFY
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            if (!abrirPlayerMusica())
+              toast.info("Abra o player de MP3 pelo aparelho.");
+          }}
+          className="rounded-xl border border-border bg-secondary px-3 py-2 text-sm font-bold"
+        >
+          MP3
         </button>
       </div>
 

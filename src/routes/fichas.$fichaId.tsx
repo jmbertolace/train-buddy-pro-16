@@ -331,7 +331,7 @@ function EditarExercicio({
               />
               Carga por lado (desmarcado = carga total)
             </label>
-            <Campo label="Imagem / GIF (URL)">
+            <Campo label="Imagem de capa (URL)">
               <input
                 className={inputCls}
                 value={form.gifUrl ?? ""}
@@ -339,7 +339,7 @@ function EditarExercicio({
                 onChange={(e) => setForm({ ...form, gifUrl: e.target.value })}
               />
             </Campo>
-            <Campo label="Vídeo curto (URL)">
+            <Campo label="Vídeo curto explicativo (URL)">
               <input
                 className={inputCls}
                 value={form.videoUrl ?? ""}

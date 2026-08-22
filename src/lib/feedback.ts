@@ -190,6 +190,29 @@ export function abrirPlaylist(url: string) {
   window.open(url, "_blank", "noopener");
 }
 
+/** Abre o player de música/MP3 do próprio aparelho (melhor esforço por plataforma). */
+export function abrirPlayerMusica(): boolean {
+  if (typeof window === "undefined") return false;
+  const ua = navigator.userAgent;
+  const isAndroid = /android/i.test(ua);
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  try {
+    if (isAndroid) {
+      window.location.href =
+        "intent://#Intent;action=android.intent.action.MUSIC_PLAYER;category=android.intent.category.APP_MUSIC;end";
+      return true;
+    }
+    if (isIOS) {
+      window.location.href = "music://";
+      return true;
+    }
+  } catch {
+    /* ignore */
+  }
+  return false;
+}
+
+
 
 /** Controles de mídia do sistema (funcionam quando o dispositivo os expõe). */
 export function mediaKey(action: "prev" | "play" | "next") {

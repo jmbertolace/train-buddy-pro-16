@@ -123,6 +123,8 @@ export interface Settings {
   spotifyAtivo: boolean;
   spotifyNoTreino: boolean;
   spotifyAutoAbrir: boolean;
+  abaixarMusicaAlerta: boolean;
+  comandoVozAtivo: boolean;
 }
 
 export interface AppData {
@@ -174,4 +176,6 @@ export const defaultSettings: Settings = {
   spotifyAtivo: true,
   spotifyNoTreino: true,
   spotifyAutoAbrir: false,
+  abaixarMusicaAlerta: true,
+  comandoVozAtivo: false,
 };
