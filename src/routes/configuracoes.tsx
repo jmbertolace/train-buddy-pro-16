@@ -167,10 +167,22 @@ function ConfigPage() {
             checked={s.spotifyAutoAbrir}
             onChange={(v) => updateSettings({ spotifyAutoAbrir: v })}
           />
+          <Toggle
+            label="Abaixar a música nos alertas de descanso"
+            checked={s.abaixarMusicaAlerta}
+            onChange={(v) => updateSettings({ abaixarMusicaAlerta: v })}
+          />
+          <Toggle
+            label="Comando de voz no treino (diga “concluído”)"
+            checked={s.comandoVozAtivo}
+            onChange={(v) => updateSettings({ comandoVozAtivo: v })}
+          />
           <p className="pt-2 text-xs text-muted-foreground">
-            O app apenas abre o Spotify oficial (aplicativo ou web). Nenhuma música é
-            armazenada ou reproduzida pelo JB Training Pro.
+            O app abre o Spotify ou o player de MP3 do aparelho — nenhuma música é
+            armazenada aqui. Nos avisos, o app assume o áudio do sistema para que a
+            música baixe de volume automaticamente.
           </p>
+
         </Secao>
 
         <div className="mt-4">
