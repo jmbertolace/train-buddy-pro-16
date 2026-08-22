@@ -145,6 +145,7 @@ export interface AppData {
   ultimaFichaId: string | null;
   playlists: SpotifyPlaylist[];
   sync: SyncState;
+  notificacoes: Notificacao[];
 }
 
 export interface SpotifyPlaylist {
