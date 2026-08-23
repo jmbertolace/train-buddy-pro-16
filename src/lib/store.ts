@@ -4,6 +4,7 @@ import type {
   Ficha,
   FichaExercise,
   LibraryExercise,
+  Notificacao,
   Settings,
   SpotifyPlaylist,
   SyncState,
