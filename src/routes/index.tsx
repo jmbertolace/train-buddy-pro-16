@@ -54,7 +54,10 @@ function Index() {
   return (
     <main className="min-h-dvh">
       <Container>
-        <header className="pt-10 pb-6 text-center">
+        <header className="relative pt-10 pb-6 text-center">
+          <div className="absolute right-0 top-8">
+            <NotificacoesSino />
+          </div>
           <p className="text-xs font-bold tracking-[0.35em] text-primary">JB</p>
           <h1 className="text-3xl font-black tracking-tight">TRAINING PRO</h1>
           <p className="mt-1 text-sm text-muted-foreground">
