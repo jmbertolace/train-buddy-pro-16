@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Container, SpotifyButton, formatDate, formatDuration } from "@/components/app-ui";
+import { NotificacoesSino } from "@/components/NotificacoesSino";
 import { useAppData } from "@/lib/store";
 
 export const Route = createFileRoute("/")({
