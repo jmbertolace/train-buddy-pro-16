@@ -183,6 +183,35 @@ export function replaceFichas(fichas: Ficha[]) {
   setState((p) => ({ ...p, fichas }));
 }
 
+/* ---------------- notificações ---------------- */
+
+export function pushNotificacao(
+  n: Omit<Notificacao, "id" | "em" | "lida"> & { em?: number },
+) {
+  setState((p) => ({
+    ...p,
+    notificacoes: [
+      { id: uid(), em: n.em ?? Date.now(), lida: false, ...n },
+      ...p.notificacoes,
+    ].slice(0, 50),
+  }));
+}
+
+export function marcarNotificacoesLidas() {
+  setState((p) => ({
+    ...p,
+    notificacoes: p.notificacoes.map((n) => ({ ...n, lida: true })),
+  }));
+}
+
+export function limparNotificacoes() {
+  setState((p) => ({ ...p, notificacoes: [] }));
+}
+
+export function useNotificacoes(): Notificacao[] {
+  return useAppData().notificacoes;
+}
+
 /* ---------------- sessão ---------------- */
 
 export function setSession(
