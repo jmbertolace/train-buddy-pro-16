@@ -4,6 +4,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { Container, PageHeader } from "@/components/app-ui";
 import { ExerciseInfoModal } from "@/components/ExerciseInfoModal";
 import { ExercisePicker } from "@/components/ExercisePicker";
+import { ShortVideoField } from "@/components/ShortVideoField";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { GRUPOS } from "@/lib/library";
 import { addPersonalizado, removePersonalizado, uid, useAppData } from "@/lib/store";
@@ -107,7 +108,6 @@ function NovoExercicio({
   const [finalidade, setFinalidade] = useState("");
   const [musculos, setMusculos] = useState("");
   const [execucao, setExecucao] = useState("");
-  const [gifUrl, setGifUrl] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
   const [padrao, setPadrao] = useState<DemoPattern>("supino");
 
@@ -121,7 +121,6 @@ function NovoExercicio({
       descricao: finalidade,
       padrao,
       personalizado: true,
-      ...(gifUrl ? { gifUrl } : {}),
       ...(videoUrl ? { videoUrl } : {}),
       info: {
         finalidade: finalidade || "Exercício personalizado.",
@@ -193,18 +192,16 @@ function NovoExercicio({
             value={execucao}
             onChange={(e) => setExecucao(e.target.value)}
           />
-          <input
-            className={inputCls}
-            placeholder="URL do vídeo curto explicativo (mp4, opcional)"
+          <label className="space-y-1">
+            <span className="text-xs tracking-wide text-muted-foreground uppercase">
+              Vídeo curto explicativo
+            </span>
+            <ShortVideoField
+              className={inputCls}
             value={videoUrl}
-            onChange={(e) => setVideoUrl(e.target.value)}
-          />
-          <input
-            className={inputCls}
-            placeholder="URL da imagem de capa (opcional)"
-            value={gifUrl}
-            onChange={(e) => setGifUrl(e.target.value)}
-          />
+              onChange={setVideoUrl}
+            />
+          </label>
           <label className="space-y-1">
             <span className="text-xs tracking-wide text-muted-foreground uppercase">
               Animação padrão (usada se não houver vídeo)

@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, Copy, GripVertical, Plus, Trash2 } from "lucide
 import { Container, EmptyState, PageHeader } from "@/components/app-ui";
 import { ExerciseInfoModal } from "@/components/ExerciseInfoModal";
 import { ExercisePicker, toFichaExercise } from "@/components/ExercisePicker";
+import { ShortVideoField } from "@/components/ShortVideoField";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { estimarMinutos, totalSeries } from "@/lib/session";
 import { setExercicios, uid, updateFicha, useAppData } from "@/lib/store";
@@ -331,20 +332,11 @@ function EditarExercicio({
               />
               Carga por lado (desmarcado = carga total)
             </label>
-            <Campo label="Imagem de capa (URL)">
-              <input
-                className={inputCls}
-                value={form.gifUrl ?? ""}
-                placeholder="https://..."
-                onChange={(e) => setForm({ ...form, gifUrl: e.target.value })}
-              />
-            </Campo>
-            <Campo label="Vídeo curto explicativo (URL)">
-              <input
+            <Campo label="Vídeo curto explicativo (5 a 10 segundos)">
+              <ShortVideoField
                 className={inputCls}
                 value={form.videoUrl ?? ""}
-                placeholder="https://..."
-                onChange={(e) => setForm({ ...form, videoUrl: e.target.value })}
+                onChange={(videoUrl) => setForm({ ...form, videoUrl })}
               />
             </Campo>
             <Campo label="Observações">

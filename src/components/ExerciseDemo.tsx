@@ -7,7 +7,6 @@ import type { DemoPattern } from "@/lib/types";
  */
 export function ExerciseDemo({
   padrao = "supino",
-  gifUrl,
   imagem,
   videoUrl,
   nome,
@@ -15,7 +14,6 @@ export function ExerciseDemo({
   className = "",
 }: {
   padrao?: DemoPattern | undefined;
-  gifUrl?: string | undefined;
   imagem?: string | undefined;
   videoUrl?: string | undefined;
   nome: string;
@@ -36,11 +34,10 @@ export function ExerciseDemo({
       />
     );
   }
-  const src = gifUrl ?? imagem;
-  if (src) {
+  if (imagem) {
     return (
       <img
-        src={src}
+        src={imagem}
         alt={`Demonstração do exercício ${nome}`}
         className={`w-full rounded-xl bg-card object-contain ${className}`}
         loading="lazy"
