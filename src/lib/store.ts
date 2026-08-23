@@ -41,6 +41,7 @@ function read(): AppData {
       settings: { ...defaultSettings, ...(parsed.settings ?? {}) },
       sync: { ...defaultSync, ...(parsed.sync ?? {}) },
       playlists: parsed.playlists ?? [],
+      notificacoes: parsed.notificacoes ?? [],
     };
   } catch {
     return empty;
