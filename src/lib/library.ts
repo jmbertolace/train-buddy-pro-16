@@ -36,6 +36,7 @@ function ex(
     grupo,
     equipamento,
     padrao,
+    videoUrl: `/exercise-videos/${padrao}.mp4`,
     descricao: finalidade,
     info: { finalidade, musculos, execucao, seguranca },
   };

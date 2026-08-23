@@ -17,7 +17,6 @@ export interface LibraryExercise {
   /** movimento usado pela animação demonstrativa offline */
   padrao: DemoPattern;
   imagem?: string;
-  gifUrl?: string;
   videoUrl?: string;
   personalizado?: boolean;
 }
@@ -50,7 +49,6 @@ export interface FichaExercise {
   descansoExercicios: number;
   observacoes?: string;
   imagem?: string;
-  gifUrl?: string;
   videoUrl?: string;
   info?: ExerciseInfo;
   padrao?: DemoPattern;

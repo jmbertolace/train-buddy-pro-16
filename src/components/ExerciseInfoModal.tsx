@@ -16,7 +16,6 @@ export interface InfoTarget {
   info?: ExerciseInfo;
   padrao?: DemoPattern;
   imagem?: string;
-  gifUrl?: string;
   videoUrl?: string;
   observacoes?: string;
   equipamento?: string;
@@ -93,7 +92,6 @@ export function ExerciseInfoModal({
             <ExerciseDemo
               nome={exercicio.nome}
               padrao={exercicio.padrao}
-              gifUrl={exercicio.gifUrl}
               imagem={exercicio.imagem}
               videoUrl={exercicio.videoUrl}
               playing={playing}
@@ -118,8 +116,8 @@ export function ExerciseInfoModal({
             </button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Quando há vídeo cadastrado ele é exibido aqui. Sem vídeo, o app mostra a
-            animação offline do padrão de movimento do exercício.
+            Os vídeos demonstrativos duram de 5 a 10 segundos. Sem vídeo, o app mostra
+            a animação offline do padrão de movimento.
           </p>
         </section>
 

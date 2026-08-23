@@ -112,7 +112,6 @@ export function toFichaExercise(
     info: e.info,
     padrao: e.padrao,
     ...(e.imagem ? { imagem: e.imagem } : {}),
-    ...(e.gifUrl ? { gifUrl: e.gifUrl } : {}),
     ...(e.videoUrl ? { videoUrl: e.videoUrl } : {}),
   };
 }
